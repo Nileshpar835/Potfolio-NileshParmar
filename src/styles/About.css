@@ -1,0 +1,267 @@
+/* ==================== ABOUT SECTION ==================== */
+.about {
+  background: #ffffff;
+  padding: 6rem 0;
+  position: relative;
+}
+
+.about::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 2rem;
+  letter-spacing: -0.5px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.about-text p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #3a3a3a;
+}
+
+.about-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: #f5f5f5;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e8e8e8;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.stat-card:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  border-color: #000000;
+}
+
+.stat-card:hover::before {
+  left: 100%;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.stat-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.about-highlight {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 100%);
+  border-left: 3px solid #000000;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.about-highlight h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #000000;
+}
+
+.about-highlight p {
+  margin-bottom: 0.8rem;
+  color: #3a3a3a;
+}
+
+.role-description {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #6a6a6a;
+}
+
+/* Responsive About */
+@media (max-width: 1024px) {
+  .about {
+    padding: 4rem 0;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-stats {
+    flex-direction: row;
+    gap: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+  }
+
+  .stat-card {
+    padding: 1.3rem;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 3rem 1.5rem;
+  }
+
+  .about-grid {
+    gap: 2rem;
+  }
+
+  .about-stats {
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .stat-card {
+    padding: 1.2rem;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .stat-name {
+    font-size: 0.8rem;
+  }
+
+  .about-text p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .about-highlight {
+    padding: 1.5rem;
+  }
+
+  .about-highlight h3 {
+    font-size: 1.1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 2rem 1rem;
+  }
+
+  .about-grid {
+    gap: 1.5rem;
+  }
+
+  .about-stats {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .stat-card {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.4rem;
+  }
+
+  .stat-name {
+    font-size: 0.75rem;
+  }
+
+  .about-text p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-highlight {
+    padding: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .about-highlight h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-highlight p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .role-description {
+    font-size: 0.9rem;
+  }
+}

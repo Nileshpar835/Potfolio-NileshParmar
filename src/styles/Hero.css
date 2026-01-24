@@ -1,0 +1,860 @@
+/* ==================== HERO SECTION ==================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Left Side */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 3rem;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #000000;
+  letter-spacing: -1px;
+}
+
+.hero-title .highlight {
+  background: linear-gradient(135deg, #000000 0%, #3a3a3a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 400;
+  color: #3a3a3a;
+  letter-spacing: 2px;
+}
+
+/* Skills */
+.skills-container {
+  margin: 1rem 0;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.skill-tag {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1.5px solid #d1d1d1;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-tag::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.skill-tag:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.skill-tag:hover::before {
+  left: 100%;
+}
+
+/* CTA Buttons */
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Right Side Visual */
+.hero-right {
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visual-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.visual-circle.large {
+  width: 400px;
+  height: 400px;
+  opacity: 0.5;
+}
+
+.visual-circle.medium {
+  width: 300px;
+  height: 300px;
+  opacity: 0.6;
+}
+
+.visual-circle.small {
+  width: 200px;
+  height: 200px;
+  opacity: 0.7;
+}
+
+.content-box {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.box-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 1.5rem;
+}
+
+.box-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #000000;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #6a6a6a;
+  margin-top: 0.5rem;
+}
+
+/* Floating Text Container */
+.floating-text-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating Text */
+.floating-text {
+  position: absolute;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform, opacity;
+  white-space: nowrap;
+}
+
+.floating-text-1 {
+  top: 20%;
+  right: 10%;
+  font-weight: 800;
+}
+
+.floating-text-2 {
+  top: 45%;
+  right: 5%;
+  font-weight: 800;
+}
+
+.floating-text-3 {
+  top: 65%;
+  right: 8%;
+  font-weight: 800;
+}
+
+/* ==================== FLOATING UI ELEMENTS ==================== */
+.floating-elements-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-element {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Code Symbols */
+.code-bracket {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.15);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 4px;
+}
+
+.bracket-1 {
+  top: 15%;
+  left: 8%;
+}
+
+.bracket-2 {
+  bottom: 20%;
+  left: 10%;
+}
+
+.bracket-3 {
+  top: 30%;
+  right: 15%;
+}
+
+.bracket-4 {
+  bottom: 35%;
+  right: 12%;
+}
+
+/* Curly Braces */
+.code-brace {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.12);
+  font-family: 'Courier New', monospace;
+}
+
+.brace-1 {
+  top: 25%;
+  right: 8%;
+}
+
+.brace-2 {
+  bottom: 15%;
+  left: 12%;
+}
+
+/* Slash Symbol */
+.code-slash {
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.14);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.slash-1 {
+  top: 50%;
+  right: 5%;
+}
+
+/* Node/Dot Icons */
+.node-icon {
+  top: 40%;
+  left: 5%;
+}
+
+.node-1 {
+  top: 20%;
+  left: 15%;
+}
+
+.node-2 {
+  top: 55%;
+  right: 18%;
+}
+
+.node-3 {
+  bottom: 22%;
+  left: 8%;
+}
+
+.node-dot {
+  width: clamp(12px, 2.5vw, 24px);
+  height: clamp(12px, 2.5vw, 24px);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 
+    inset 0 0 8px rgba(0, 0, 0, 0.1),
+    0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+.node-dot::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  animation: pulse-ring 3s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ==================== CONCEPT LABELS ==================== */
+.concept-label {
+  font-size: clamp(1.2rem, 4vw, 2.5rem);
+  font-weight: 600;
+  text-transform: lowercase;
+  color: rgba(0, 0, 0, 0.16);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 2px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.concept-code {
+  top: 10%;
+  right: 20%;
+  font-weight: 700;
+}
+
+.concept-logic {
+  bottom: 30%;
+  right: 8%;
+  font-weight: 600;
+}
+
+.concept-data {
+  top: 50%;
+  left: 5%;
+  font-weight: 700;
+}
+
+.concept-ai {
+  top: 35%;
+  right: 5%;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4.5vw, 3rem);
+  letter-spacing: 3px;
+}
+
+/* Responsive Hero */
+@media (max-width: 1024px) {
+  .hero {
+    min-height: auto;
+    padding: 4rem 0;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-right {
+    height: 350px;
+  }
+
+  .visual-circle.large {
+    width: 300px;
+    height: 300px;
+  }
+
+  .visual-circle.medium {
+    width: 220px;
+    height: 220px;
+  }
+
+  .visual-circle.small {
+    width: 150px;
+    height: 150px;
+  }
+
+  .content-box {
+    padding: 1.5rem;
+  }
+
+  .floating-text {
+    font-size: clamp(2rem, 6vw, 4rem);
+  }
+
+  .floating-text-1 {
+    top: 18%;
+    right: 8%;
+  }
+
+  .floating-text-2 {
+    top: 42%;
+    right: 5%;
+  }
+
+  .floating-text-3 {
+    top: 62%;
+    right: 8%;
+  }
+
+  .concept-label {
+    font-size: clamp(1rem, 3.5vw, 2rem);
+  }
+
+  .concept-ai {
+    font-size: clamp(1.3rem, 4vw, 2.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .floating-elements-container {
+    opacity: 0.6;
+  }
+
+  .code-bracket {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .code-brace {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .code-slash {
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+  }
+
+  .node-dot {
+    width: clamp(10px, 2.2vw, 18px);
+    height: clamp(10px, 2.2vw, 18px);
+  }
+
+  .concept-label {
+    font-size: clamp(1rem, 3.2vw, 1.8rem);
+    opacity: 0.7;
+  }
+
+  .concept-code {
+    top: 8%;
+    right: 15%;
+  }
+
+  .concept-logic {
+    bottom: 32%;
+    right: 5%;
+  }
+
+  .concept-data {
+    top: 52%;
+    left: 3%;
+  }
+
+  .concept-ai {
+    top: 32%;
+    right: 2%;
+    font-size: clamp(1.2rem, 3.5vw, 2.2rem);
+  }
+
+  .floating-text-1 {
+    top: 18%;
+    right: 8%;
+  }
+
+  .floating-text-2 {
+    top: 42%;
+    right: 5%;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 3rem 0;
+    min-height: auto;
+  }
+
+  .hero-left {
+    padding-top: 2.5rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-right {
+    height: 280px;
+    margin-top: 2rem;
+  }
+
+  .skills-container {
+    margin: 0.8rem 0;
+  }
+
+  .skills-list {
+    gap: 0.6rem;
+  }
+
+  .skill-tag {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .floating-text {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+  }
+
+  .floating-text-1 {
+    top: 22%;
+    right: 2%;
+  }
+
+  .floating-text-2 {
+    top: 48%;
+    right: 1%;
+  }
+
+  .floating-text-3 {
+    top: 70%;
+    right: 3%;
+  }
+
+  .visual-circle.large {
+    width: 200px;
+    height: 200px;
+  }
+
+  .visual-circle.medium {
+    width: 140px;
+    height: 140px;
+  }
+
+  .visual-circle.small {
+    width: 90px;
+    height: 90px;
+  }
+
+  .content-box {
+    padding: 1.2rem;
+    width: 90%;
+  }
+
+  .box-title {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .box-stats {
+    gap: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .concept-label {
+    font-size: clamp(0.9rem, 2.8vw, 1.5rem);
+  }
+
+  .concept-code {
+    top: 12%;
+    right: 12%;
+  }
+
+  .concept-logic {
+    bottom: 28%;
+    right: 3%;
+  }
+
+  .concept-data {
+    top: 48%;
+    left: 2%;
+  }
+
+  .concept-ai {
+    top: 38%;
+    right: 1%;
+    font-size: clamp(1.1rem, 3vw, 1.8rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 2rem 0;
+  }
+
+  .hero-left {
+    padding-top: 2rem;
+  }
+
+  .floating-elements-container {
+    opacity: 0.4;
+  }
+
+  .code-bracket {
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
+  }
+
+  .code-brace {
+    font-size: clamp(1.5rem, 4vw, 2.8rem);
+  }
+
+  .code-slash {
+    font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  }
+
+  .node-dot {
+    width: clamp(8px, 2vw, 14px);
+    height: clamp(8px, 2vw, 14px);
+  }
+
+  .bracket-1 {
+    top: 12%;
+    left: 5%;
+  }
+
+  .bracket-2 {
+    bottom: 25%;
+    left: 6%;
+  }
+
+  .bracket-3 {
+    top: 35%;
+    right: 8%;
+  }
+
+  .bracket-4 {
+    bottom: 40%;
+    right: 6%;
+  }
+
+  .brace-1 {
+    top: 20%;
+    right: 4%;
+  }
+
+  .brace-2 {
+    bottom: 18%;
+    left: 8%;
+  }
+
+  .slash-1 {
+    top: 55%;
+    right: 3%;
+  }
+
+  .node-1 {
+    top: 18%;
+    left: 10%;
+  }
+
+  .node-2 {
+    top: 60%;
+    right: 12%;
+  }
+
+  .node-3 {
+    bottom: 28%;
+    left: 6%;
+  }
+
+  .concept-label {
+    font-size: clamp(0.85rem, 2.2vw, 1.3rem);
+  }
+
+  .concept-code {
+    top: 10%;
+    right: 10%;
+    font-size: clamp(0.85rem, 2vw, 1.2rem);
+  }
+
+  .concept-logic {
+    bottom: 24%;
+    right: 1%;
+    font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+  }
+
+  .concept-data {
+    top: 50%;
+    left: 1%;
+    font-size: clamp(0.85rem, 2vw, 1.2rem);
+  }
+
+  .concept-ai {
+    top: 40%;
+    right: -2%;
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+  }
+
+  .hero-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .skills-list {
+    gap: 0.4rem;
+  }
+
+  .skill-tag {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .hero-right {
+    height: 220px;
+    margin-top: 1.5rem;
+  }
+
+  .visual-circle.large {
+    width: 150px;
+    height: 150px;
+  }
+
+  .visual-circle.medium {
+    width: 110px;
+    height: 110px;
+  }
+
+  .visual-circle.small {
+    width: 70px;
+    height: 70px;
+  }
+
+  .content-box {
+    padding: 1rem;
+  }
+
+  .box-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .box-stats {
+    gap: 1rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .cta-buttons {
+    gap: 0.6rem;
+  }
+
+  .btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.85rem;
+  }
+
+  .hero::before {
+    width: 300px;
+    height: 300px;
+    right: -15%;
+    top: -30%;
+  }
+}
