@@ -6,14 +6,16 @@ const InteractiveRope = () => {
   const containerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+  const [isHovered, setIsHovered] = useState(false);
   const velocityRef = useRef(0);
   const smoothScrollRef = useRef(0);
   const lastScrollRef = useRef(0);
   const animationFrameRef = useRef(null);
+  const velocityHistoryRef = useRef([]);
 
   // Rope configuration
-  const ropeSvgPoints = 30;
-  const ropeHeight = isDesktop ? 800 : isDesktop ? 600 : 400;
+  const ropeSvgPoints = 35;
+  const ropeHeight = isDesktop ? 900 : isDesktop ? 700 : 500;
   const containerHeight = ropeHeight;
 
   // Responsive settings
@@ -26,22 +28,32 @@ const InteractiveRope = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Scroll handler with smooth easing
+  // Scroll handler with enhanced physics
   useEffect(() => {
     const handleScroll = () => {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const newScrollProgress = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
 
-      // Calculate velocity for inertia effect
-      velocityRef.current = (newScrollProgress - lastScrollRef.current) * 0.8;
+      // Calculate velocity with momentum
+      const currentVelocity = (newScrollProgress - lastScrollRef.current) * 0.8;
+      velocityRef.current = currentVelocity;
       lastScrollRef.current = newScrollProgress;
+
+      // Keep velocity history for inertia
+      velocityHistoryRef.current.push(currentVelocity);
+      if (velocityHistoryRef.current.length > 5) {
+        velocityHistoryRef.current.shift();
+      }
 
       setScrollProgress(newScrollProgress);
     };
 
-    // Smooth animation frame for physics
+    // Enhanced animation frame with spring-like easing
     const animate = () => {
-      smoothScrollRef.current += (scrollProgress - smoothScrollRef.current) * 0.15; // Easing factor
+      // Use cubic easing for smoother spring effect
+      const diff = scrollProgress - smoothScrollRef.current;
+      const springForce = diff * 0.12; // Spring constant
+      smoothScrollRef.current += springForce * (1 - Math.abs(velocityRef.current) * 0.05);
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
@@ -56,27 +68,40 @@ const InteractiveRope = () => {
     };
   }, [scrollProgress]);
 
-  // Generate rope path with wave and slack simulation
+  // Generate rope path with realistic wave and slack
   const generateRopePath = () => {
     const points = [];
-    const slack = scrollProgress * 60; // Maximum slack of 60px when scrolled down
-    const waveAmplitude = 12 + Math.sin(scrollProgress * Math.PI * 4) * 6; // Wave motion
+    const baseSlack = scrollProgress * 80; // More noticeable slack
+    
+    // Add velocity-based jitter reduction through averaging
+    const avgVelocity = velocityHistoryRef.current.length > 0 
+      ? velocityHistoryRef.current.reduce((a, b) => a + b) / velocityHistoryRef.current.length 
+      : 0;
+    
+    // Multi-layered wave for organic motion
+    const waveAmplitude = 14 + Math.sin(scrollProgress * Math.PI * 4) * 8;
+    const microWave = Math.sin(Date.now() * 0.001) * 2;
 
     for (let i = 0; i < ropeSvgPoints; i++) {
       const progress = i / (ropeSvgPoints - 1);
-      const y = progress * containerHeight - slack * progress;
+      
+      // Slack increases towards bottom
+      const slackFactor = progress * progress; // Quadratic for realistic sagging
+      const y = progress * containerHeight - baseSlack * slackFactor;
 
-      // Create wave motion
-      const wave = Math.sin(progress * Math.PI * 2 + scrollProgress * Math.PI * 6) * waveAmplitude;
+      // Create dynamic wave motion with multiple frequencies
+      const wave1 = Math.sin(progress * Math.PI * 2 + scrollProgress * Math.PI * 6) * waveAmplitude;
+      const wave2 = Math.sin(progress * Math.PI * 3.5 + scrollProgress * Math.PI * 4.5) * (waveAmplitude * 0.4);
+      const wave = wave1 + wave2 + microWave;
 
-      // Simulate rope compression/extension
-      const tension = 1 - slack * 0.15;
-      const x = 20 + wave * (0.5 + tension * 0.5);
+      // Simulate rope tension with better physics
+      const tension = 1 - baseSlack * 0.1;
+      const x = 20 + wave * (0.6 + tension * 0.4);
 
       points.push([x, y]);
     }
 
-    // Create smooth curve
+    // Create smooth quadratic curve
     let pathData = `M ${points[0][0]} ${points[0][1]}`;
     for (let i = 1; i < points.length - 1; i++) {
       const xc = (points[i][0] + points[i + 1][0]) / 2;
@@ -89,95 +114,163 @@ const InteractiveRope = () => {
     return pathData;
   };
 
-  // Don't render on mobile for performance
-  if (!isDesktop && window.innerWidth < 768) {
-    return null;
-  }
-
   return (
-    <div ref={containerRef} className="rope-container">
+    <div 
+      ref={containerRef} 
+      className="rope-container"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <motion.svg
         className="rope-svg"
         viewBox={`0 0 100 ${containerHeight}`}
         preserveAspectRatio="none"
         initial={{ opacity: 0 }}
-        animate={{ opacity: isDesktop ? 1 : 0.7 }}
-        transition={{ duration: 1 }}
+        animate={{ opacity: isDesktop ? 1 : 0.8 }}
+        transition={{ duration: 1.2 }}
       >
-        {/* Rope shadow for depth */}
+        {/* SVG Gradients and Filters */}
         <defs>
+          {/* Main rope gradient - realistic brown */}
           <linearGradient id="ropeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style={{ stopColor: '#d1d5db', stopOpacity: 0.6 }} />
-            <stop offset="50%" style={{ stopColor: '#9ca3af', stopOpacity: 0.8 }} />
-            <stop offset="100%" style={{ stopColor: '#d1d5db', stopOpacity: 0.6 }} />
+            <stop offset="0%" style={{ stopColor: '#8B4513', stopOpacity: 0.7 }} />
+            <stop offset="25%" style={{ stopColor: '#A0522D', stopOpacity: 0.9 }} />
+            <stop offset="50%" style={{ stopColor: '#8B6914', stopOpacity: 0.95 }} />
+            <stop offset="75%" style={{ stopColor: '#A0522D', stopOpacity: 0.9 }} />
+            <stop offset="100%" style={{ stopColor: '#8B4513', stopOpacity: 0.7 }} />
           </linearGradient>
 
-          <filter id="ropeShadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" />
+          {/* Rope highlight gradient */}
+          <linearGradient id="ropeHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style={{ stopColor: '#D2691E', stopOpacity: 0 }} />
+            <stop offset="50%" style={{ stopColor: '#CD853F', stopOpacity: 0.4 }} />
+            <stop offset="100%" style={{ stopColor: '#D2691E', stopOpacity: 0 }} />
+          </linearGradient>
+
+          {/* Deep shadow filter */}
+          <filter id="deepShadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+            <feOffset dx="1" dy="1" />
           </filter>
 
+          {/* Soft glow filter */}
           <filter id="ropeGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" />
             <feComponentTransfer>
-              <feFuncA type="linear" slope="0.4" />
+              <feFuncA type="linear" slope="0.5" />
             </feComponentTransfer>
+          </filter>
+
+          {/* Texture filter for realism */}
+          <filter id="textureFilter">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
           </filter>
         </defs>
 
-        {/* Outer rope glow */}
+        {/* Far background glow - creates depth */}
         <path
           d={generateRopePath()}
-          stroke="url(#ropeGradient)"
-          strokeWidth="6"
+          stroke="#6B4423"
+          strokeWidth="8"
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
           filter="url(#ropeGlow)"
-          opacity="0.4"
+          opacity="0.3"
         />
 
-        {/* Main rope */}
+        {/* Medium shadow layer */}
         <path
           d={generateRopePath()}
-          stroke="url(#ropeGradient)"
-          strokeWidth="3"
+          stroke="#5C3317"
+          strokeWidth="5"
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
-          filter="url(#ropeShadow)"
+          filter="url(#deepShadow)"
+          opacity="0.6"
+        />
+
+        {/* Main rope body */}
+        <path
+          d={generateRopePath()}
+          stroke="url(#ropeGradient)"
+          strokeWidth="3.5"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          filter="url(#textureFilter)"
           style={{
             willChange: 'stroke-dasharray, filter',
-            transition: 'opacity 0.3s ease-out',
+            transition: 'filter 0.2s ease-out',
+            filter: isHovered ? 'drop-shadow(0 0 8px rgba(205, 133, 63, 0.5))' : 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))',
           }}
         />
 
-        {/* Subtle texture lines on rope */}
-        <g opacity="0.3">
-          {[...Array(Math.floor(ropeSvgPoints / 4))].map((_, i) => {
-            const progress = (i / (Math.floor(ropeSvgPoints / 4) - 1 || 1)) || 0;
-            const slack = scrollProgress * 60 * progress;
-            const y = progress * containerHeight - slack;
+        {/* Rope highlight for dimension */}
+        <path
+          d={generateRopePath()}
+          stroke="url(#ropeHighlight)"
+          strokeWidth="1.5"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.6"
+        />
+
+        {/* Rope texture - fibers */}
+        <g opacity="0.4">
+          {[...Array(Math.floor(ropeSvgPoints / 3))].map((_, i) => {
+            const progress = (i / (Math.floor(ropeSvgPoints / 3) - 1 || 1)) || 0;
+            const baseSlack = scrollProgress * 80 * progress * progress;
+            const y = progress * containerHeight - baseSlack;
             return (
               <line
                 key={i}
-                x1="16"
+                x1="14"
                 y1={y}
-                x2="24"
+                x2="26"
                 y2={y}
-                stroke="#9ca3af"
-                strokeWidth="0.5"
-                opacity="0.5"
+                stroke="#5C3317"
+                strokeWidth="0.7"
+                opacity="0.6"
+              />
+            );
+          })}
+        </g>
+
+        {/* Additional texture details */}
+        <g opacity="0.25">
+          {[...Array(Math.floor(ropeSvgPoints / 4))].map((_, i) => {
+            const progress = (i / (Math.floor(ropeSvgPoints / 4) - 1 || 1)) || 0;
+            const baseSlack = scrollProgress * 80 * progress * progress;
+            const y = progress * containerHeight - baseSlack;
+            const offset = Math.sin(i * 0.5) * 2;
+            return (
+              <circle
+                key={`circle-${i}`}
+                cx={20 + offset}
+                cy={y}
+                r="0.4"
+                fill="#8B6914"
+                opacity="0.4"
               />
             );
           })}
         </g>
       </motion.svg>
 
-      {/* Anchor point at top */}
-      <div className="rope-anchor top" />
-
-      {/* Anchor point at bottom */}
-      <div className="rope-anchor bottom" />
+      {/* Enhanced anchor points */}
+      <motion.div 
+        className="rope-anchor top"
+        animate={{ scale: isHovered ? 1.2 : 1 }}
+        transition={{ duration: 0.3 }}
+      />
+      <motion.div 
+        className="rope-anchor bottom"
+        animate={{ scale: isHovered ? 1.2 : 1 }}
+        transition={{ duration: 0.3 }}
+      />
     </div>
   );
 };
