@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Download } from 'lucide-react';
 import '../styles/Hero.css';
 import resumePDF from '../assets/NIlesh Parmar-Resume.pdf';
+import FloatingIcons from './FloatingIcons';
 
 const Hero = () => {
   const containerVariants = {
@@ -29,6 +30,7 @@ const Hero = () => {
 
   return (
     <section id="home" className="hero">
+      <FloatingIcons variant="hero" />
       <div className="container">
         <div className="hero-content">
 
@@ -41,7 +43,7 @@ const Hero = () => {
           >
             <motion.div variants={itemVariants}>
               <h1 className="hero-title">
-                Hi, I'm <span className="highlight">Nilesh</span>
+                Hi, I'm <span className="highlight">Nilesh Parmar</span>
               </h1>
             </motion.div>
 

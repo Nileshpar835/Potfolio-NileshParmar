@@ -1,0 +1,388 @@
+/* ==================== FLOATING ICONS STYLES ==================== */
+
+.floating-icons-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Floating Icon Wrapper - positioning */
+.floating-icon-wrapper {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  pointer-events: all;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Main floating icon container - GPU optimized for rope physics */
+.floating-icon {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Inner icon styling - with smooth spring damping */
+.icon-inner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Glassmorphism background with glow */
+.icon-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  opacity: 0.15;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  z-index: -1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-inner:hover .icon-glow {
+  opacity: 0.35;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.35);
+}
+
+/* Icon content with color */
+.icon-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.15));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-inner:hover .icon-content {
+  filter: drop-shadow(0 0 20px currentColor) drop-shadow(0 0 30px rgba(0, 0, 0, 0.2));
+  transform: scale(1.1);
+}
+
+/* Enhanced glow on hover with blur effect */
+.icon-inner:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Tooltip styling */
+.icon-tooltip {
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-radius: 12px;
+  white-space: nowrap;
+  z-index: 100;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+              0 0 20px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.tooltip-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.tooltip-desc {
+  font-size: 0.75rem;
+  color: #c0c0c0;
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Tablet Styles */
+@media (max-width: 1024px) {
+  .floating-icon-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  .icon-inner {
+    width: 65px;
+    height: 65px;
+  }
+
+  .icon-content {
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.12));
+  }
+
+  .icon-inner:hover .icon-content {
+    filter: drop-shadow(0 0 15px currentColor) drop-shadow(0 0 20px rgba(0, 0, 0, 0.15));
+  }
+
+  .icon-tooltip {
+    bottom: -70px;
+    padding: 8px 12px;
+  }
+
+  .tooltip-title {
+    font-size: 0.8rem;
+  }
+
+  .tooltip-desc {
+    font-size: 0.7rem;
+  }
+
+  /* Reduced swing on tablet - rope physics */
+  .floating-icon {
+    /* Spring physics with reduced tension */
+    /* Handled by JS: stiffness: 70, damping: 18 */
+  }
+}
+
+/* Mobile Styles - Rope drag only */
+@media (max-width: 768px) {
+  .floating-icon-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .icon-inner {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon-content {
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.1));
+  }
+
+  .icon-glow {
+    border-radius: 16px;
+  }
+
+  .icon-inner:hover .icon-content {
+    filter: drop-shadow(0 0 12px currentColor) drop-shadow(0 0 15px rgba(0, 0, 0, 0.12));
+  }
+
+  .floating-icon-wrapper:active .icon-inner {
+    transform: scale(0.95);
+  }
+
+  /* Hide tooltips on mobile for cleaner UI */
+  .icon-tooltip {
+    display: none;
+  }
+
+  /* Subtle rope drag effect on mobile - minimal motion */
+  .floating-icon {
+    /* Spring physics with high damping */
+    /* Handled by JS: stiffness: 100, damping: 25 */
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .floating-icon-wrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .icon-inner {
+    width: 45px;
+    height: 45px;
+  }
+
+  .icon-glow {
+    opacity: 0.1;
+  }
+
+  .icon-inner:hover .icon-glow {
+    opacity: 0.25;
+  }
+}
+
+/* ==================== ANIMATION KEYFRAMES ==================== */
+
+/* Floating animation with soft easing */
+@keyframes floatingUp {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-40px) translateX(10px);
+  }
+}
+
+@keyframes floatingDown {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(40px) translateX(-15px);
+  }
+}
+
+@keyframes floatingDiagonal {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-30px) translateX(20px);
+  }
+  75% {
+    transform: translateY(30px) translateX(-10px);
+  }
+}
+
+@keyframes floatingGentleWave {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-25px) translateX(15px);
+  }
+}
+
+/* Subtle pulse glow effect on hover */
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.3;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2),
+                0 0 20px 0 currentColor;
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.4),
+                0 0 30px 0 currentColor;
+  }
+}
+
+/* Shimmer effect on icon */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* ==================== ROPE PHYSICS ANIMATIONS ==================== */
+
+/* Smooth damping keyframes for rope oscillation */
+@keyframes ropeDamp {
+  0% { opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+/* Micro vibration for post-scroll settle */
+@keyframes microVibration {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(1px, 1px); }
+}
+
+/* Spring-like tension build up */
+@keyframes ropeWave {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+/* ==================== REDUCED MOTION ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-icon,
+  .icon-inner,
+  .icon-glow,
+  .icon-content {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .floating-icon-wrapper {
+    animation: none !important;
+  }
+}
+
+/* ==================== DARK MODE SUPPORT ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .icon-tooltip {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .tooltip-title {
+    color: #000000;
+  }
+
+  .tooltip-desc {
+    color: #4a4a4a;
+  }
+
+  .icon-glow {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .icon-inner:hover .icon-glow {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* ==================== GPU OPTIMIZATION ==================== */
+
+.floating-icon-wrapper {
+  /* Enable GPU acceleration */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.floating-icon {
+  /* Enable GPU for animations */
+  transform: translate3d(0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon-inner {
+  /* Smooth transformations */
+  transform: translate3d(0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+}

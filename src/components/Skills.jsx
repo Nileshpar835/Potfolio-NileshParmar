@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/Skills.css';
+import FloatingIcons from './FloatingIcons';
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState(null);
@@ -45,6 +46,7 @@ const Skills = () => {
 
   return (
     <section id="skills" className="skills">
+      <FloatingIcons variant="skills" />
       <div className="container">
         <motion.div
           variants={containerVariants}

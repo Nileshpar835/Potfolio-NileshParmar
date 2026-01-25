@@ -8,6 +8,7 @@
   background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .hero::before {
