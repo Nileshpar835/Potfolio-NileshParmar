@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Download } from 'lucide-react';
 import '../styles/Hero.css';
-import resumePDF from '../assets/NIlesh Parmar-Resume.pdf';
+import resumePDF from '../assets/Nilesh Parmar-Resume.pdf';
 import FloatingIcons from './FloatingIcons';
 
 const Hero = () => {
