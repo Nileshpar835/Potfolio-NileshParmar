@@ -53,7 +53,7 @@ const About = () => {
           <motion.div variants={itemVariants} className="about-highlight">
             <h3>Current Role</h3>
             <p>
-              <strong>Python Developer Intern @ Zapuza Technologies LLP</strong> (Nov 2025 - May 2026)
+              <strong>Python Developer Intern @ Zapuza Technologies LLP</strong>
             </p>
             <p className="role-description">
               Developing and maintaining backend components using Python, following clean coding principles. 
