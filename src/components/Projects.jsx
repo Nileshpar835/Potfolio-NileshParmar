@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, ExternalLink, ChevronDown, Download, Code, Zap, Cpu } from 'lucide-react';
 import '../styles/Projects.css';
-import resumePDF from '../assets/NIlesh Parmar-Resume.pdf';
 
 // Floating Elements Component
 const FloatingElements = () => {
