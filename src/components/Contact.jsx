@@ -134,18 +134,6 @@ const Contact = () => {
                     <div className="info-value">nileshapr835@gmail.com</div>
                   </div>
                 </motion.a>
-
-                <motion.a
-                  href="tel:+919016070514"
-                  className="info-card"
-                  whileHover={{ y: -4 }}
-                >
-                  <Phone size={24} />
-                  <div>
-                    <div className="info-label">Phone</div>
-                    <div className="info-value">+91 9016070514</div>
-                  </div>
-                </motion.a>
               </div>
 
               <div className="social-section">
