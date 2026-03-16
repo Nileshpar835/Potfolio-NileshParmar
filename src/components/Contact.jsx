@@ -84,12 +84,7 @@ const Contact = () => {
       href: 'mailto:nileshapr835@gmail.com',
       color: '#000000',
     },
-    {
-      icon: Phone,
-      label: 'Phone',
-      href: 'tel:+919016070514',
-      color: '#000000',
-    },
+    
     {
       icon: Linkedin,
       label: 'LinkedIn',
