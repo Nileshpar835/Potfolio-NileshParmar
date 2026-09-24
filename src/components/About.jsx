@@ -39,25 +39,53 @@ const About = () => {
           <div className="about-grid">
             <motion.div variants={itemVariants} className="about-text">
               <p>
-                I'm a passionate Software Engineer and Python Developer with hands-on experience in backend development, 
-                web applications, and data-driven systems. With a strong foundation in multiple programming languages and frameworks, 
+                I'm a passionate Software Development Engineer and Python
+                Developer with hands-on experience in backend development,
+                web applications, and data-driven systems. With a strong
+                foundation in multiple programming languages and frameworks,
                 I build scalable applications that solve real-world problems.
               </p>
+
               <p>
-                Currently transitioning toward Data Science and AI-driven solutions, I focus on clean architecture, 
-                performance optimization, and delivering high-quality code that makes an impact.
+                Currently working as an SDE at Potenza Global Solution, I focus
+                on building reliable software solutions, developing scalable
+                applications, optimizing performance, and writing clean,
+                maintainable code. I also have a strong interest in Data
+                Science, AI, and building intelligent, data-driven solutions.
               </p>
             </motion.div>
           </div>
 
+          {/* Current Role */}
           <motion.div variants={itemVariants} className="about-highlight">
             <h3>Current Role</h3>
+
+            <p>
+              <strong>SDE @ Potenza Global Solution</strong>
+            </p>
+
+            <p className="role-description">
+              Working on software development and backend solutions, focusing
+              on building scalable applications, implementing efficient
+              features, debugging, testing, performance optimization, and
+              collaborating with team members to deliver high-quality
+              software.
+            </p>
+          </motion.div>
+
+          {/* Previous Experience */}
+          <motion.div variants={itemVariants} className="about-highlight">
+            <h3>Previous Experience</h3>
+
             <p>
               <strong>Python Developer Intern @ Zapuza Technologies LLP</strong>
             </p>
+
             <p className="role-description">
-              Developing and maintaining backend components using Python, following clean coding principles. 
-              Implementing optimized modules, debugging, testing, and collaborating with cross-functional teams using Git workflows.
+              Developed and maintained backend components using Python while
+              following clean coding principles. Implemented optimized
+              modules, worked on debugging and testing, and collaborated with
+              cross-functional teams using Git workflows.
             </p>
           </motion.div>
         </motion.div>
