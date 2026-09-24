@@ -1,4 +1,4 @@
-/* Interactive Rope Component Styles - Enhanced Brown Rope Theme with Gold Accents */
+/* Interactive Rope - realistic laid-rope rendering */
 
 .rope-container {
   position: fixed;
@@ -13,135 +13,148 @@
   align-items: center;
   justify-content: center;
   cursor: grab;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(2px);
+  contain: layout style paint;
+  animation: ropeSlideIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .rope-container:active {
   cursor: grabbing;
+  touch-action: none;
 }
 
 .rope-svg {
   width: 100%;
   height: 100%;
   max-height: 100vh;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
-  will-change: transform;
-  transform: translateZ(0); /* Enable GPU acceleration */
-  transition: filter 0.3s ease;
+  overflow: visible;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.3));
+  will-change: filter;
+  transform: translateZ(0);
+  opacity: 0;
+  animation: ropeFadeIn 1.2s ease 0.15s forwards;
+}
+
+@keyframes ropeFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.rope-container.is-hovered .rope-svg,
+.rope-container:hover .rope-svg {
+  filter: drop-shadow(0 10px 26px rgba(184, 134, 11, 0.35));
+}
+
+/* ---- rope layers ---- */
+
+.rope-layer {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rope-shadow {
+  stroke: #0a0603;
+  opacity: 0.5;
+  filter: url(#ropeBlur);
+}
+
+.rope-outline {
+  stroke: #1f1207;
   opacity: 0.95;
 }
 
-.rope-container:hover .rope-svg {
-  filter: drop-shadow(0 12px 32px rgba(184, 134, 11, 0.35));
-  opacity: 1;
+.rope-body {
+  stroke: #7a4a24;
 }
 
-/* Rope anchor points - Enhanced Gold and Bronze metallic style */
-.rope-anchor {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #FFD700, #B8860B, #8B4513);
-  box-shadow: 
-    0 6px 16px rgba(0, 0, 0, 0.4),
-    inset -2px -2px 5px rgba(0, 0, 0, 0.5),
-    inset 3px 3px 5px rgba(255, 255, 255, 0.3),
-    0 0 12px rgba(255, 215, 0, 0.5);
-  opacity: 0.85;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.rope-light {
+  stroke: #9a6430;
 }
 
-.rope-anchor.top {
-  top: 20px;
-  right: 40px;
+.rope-lighter {
+  stroke: #b98547;
 }
 
-.rope-anchor.bottom {
-  bottom: 20px;
-  right: 40px;
+.rope-weather {
+  stroke: #4e2f14;
+  opacity: 0.16;
+  stroke-dasharray: 28 64 12 80 40 55;
 }
 
-.rope-container:hover .rope-anchor {
-  opacity: 1;
-  transform: scale(1.4);
-  box-shadow: 
-    0 8px 20px rgba(0, 0, 0, 0.5),
-    inset -2px -2px 5px rgba(0, 0, 0, 0.6),
-    inset 3px 3px 5px rgba(255, 255, 255, 0.4),
-    0 0 16px rgba(255, 215, 0, 0.7);
+.rope-spec {
+  stroke: #f2ddad;
+  opacity: 0.72;
+  filter: url(#specBlur);
 }
 
-/* Desktop: Full animation with enhanced effects */
+.rope-groove-lip {
+  stroke: #d8b070;
+  opacity: 0.36;
+}
+
+.rope-groove {
+  stroke: #1e1004;
+  opacity: 0.5;
+}
+
+.rope-fiber {
+  stroke: #efd09a;
+  opacity: 0.3;
+}
+
+.rope-fly {
+  stroke: #e8c88a;
+  opacity: 0.45;
+}
+
+.rope-glow {
+  stroke: #ffb84d;
+  opacity: 0;
+}
+
+/* ---- eyelet anchors ---- */
+
+.eyelet-plate {
+  fill: rgba(10, 6, 3, 0.35);
+}
+
+.eyelet-shine {
+  fill: none;
+  stroke: rgba(255, 240, 200, 0.55);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.rope-eyelet {
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.45));
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---- responsive ---- */
+
 @media (min-width: 1024px) {
   .rope-container {
     right: 2rem;
     width: 120px;
   }
-
-  .rope-svg {
-    opacity: 0.95;
-  }
-
-  .rope-anchor {
-    width: 16px;
-    height: 16px;
-  }
 }
 
-/* Tablet: Optimized motion and sizing */
 @media (min-width: 768px) and (max-width: 1023px) {
   .rope-container {
     right: 1.2rem;
     width: 100px;
   }
-
-  .rope-svg {
-    opacity: 0.9;
-  }
-
-  .rope-anchor {
-    width: 14px;
-    height: 14px;
-  }
-
-  .rope-anchor.top {
-    right: 35px;
-  }
-
-  .rope-anchor.bottom {
-    right: 35px;
-  }
 }
 
-/* Mobile: Hide rope to avoid blocking view */
 @media (max-width: 767px) {
   .rope-container {
     display: none;
   }
 }
 
-/* Smooth scrolling performance optimization */
-@supports (scroll-behavior: smooth) {
-  html {
-    scroll-behavior: auto; /* Let animation handle smoothness */
-  }
-}
+/* ---- entrance ---- */
 
-/* Crisp rope rendering */
-.rope-svg path {
-  shape-rendering: crispEdges;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-/* Layout containment for better performance */
-.rope-container {
-  contain: layout style paint;
-}
-
-/* Rope entrance animation */
 @keyframes ropeSlideIn {
   0% {
     opacity: 0;
@@ -157,107 +170,26 @@
   }
 }
 
-.rope-container {
-  animation: ropeSlideIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
+/* ---- accessibility ---- */
 
-/* Enhanced contrast mode support */
 @media (prefers-contrast: more) {
-  .rope-svg {
-    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+  .rope-outline {
+    stroke: #000;
+    stroke-width: 3;
   }
 
-  .rope-anchor {
-    opacity: 1;
-    box-shadow: 
-      0 8px 20px rgba(0, 0, 0, 0.6),
-      inset -2px -2px 5px rgba(0, 0, 0, 0.7),
-      inset 3px 3px 5px rgba(255, 255, 255, 0.4),
-      0 0 20px rgba(255, 215, 0, 0.8);
+  .rope-groove {
+    opacity: 0.75;
   }
 }
 
-/* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   .rope-container {
     animation: none;
-    opacity: 0.8;
+    opacity: 1;
   }
 
   .rope-svg {
-    opacity: 0.6 !important;
-  }
-
-  .rope-anchor {
-    transition: none;
-  }
-
-  .rope-container:hover .rope-anchor {
-    transform: none;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
   }
 }
-
-/* Dark mode adjustments - enhanced visibility */
-@media (prefers-color-scheme: dark) {
-  .rope-svg {
-    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.6));
-  }
-
-  .rope-container:hover .rope-svg {
-    filter: drop-shadow(0 12px 32px rgba(184, 134, 11, 0.4));
-  }
-
-  .rope-anchor {
-    background: radial-gradient(circle at 35% 35%, #FFD700, #DAA520, #8B7500);
-    box-shadow: 
-      0 6px 16px rgba(0, 0, 0, 0.7),
-      inset -2px -2px 5px rgba(0, 0, 0, 0.7),
-      inset 3px 3px 5px rgba(255, 255, 255, 0.2),
-      0 0 12px rgba(218, 165, 32, 0.6);
-  }
-
-  .rope-container:hover .rope-anchor {
-    box-shadow: 
-      0 8px 20px rgba(0, 0, 0, 0.8),
-      inset -2px -2px 5px rgba(0, 0, 0, 0.8),
-      inset 3px 3px 5px rgba(255, 255, 255, 0.3),
-      0 0 16px rgba(255, 215, 0, 0.8);
-  }
-}
-
-/* Animation for rope pulse on interaction - enhanced visibility */
-@keyframes ropePulse {
-  0%, 100% {
-    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
-  }
-  50% {
-    filter: drop-shadow(0 12px 32px rgba(184, 134, 11, 0.35));
-  }
-}
-
-.rope-container:hover .rope-svg {
-  animation: ropePulse 2s ease-in-out infinite;
-}
-
-/* Animation for rope anchor glow */
-@keyframes anchorGlow {
-  0%, 100% {
-    box-shadow: 
-      0 6px 16px rgba(0, 0, 0, 0.4),
-      inset -2px -2px 5px rgba(0, 0, 0, 0.5),
-      inset 3px 3px 5px rgba(255, 255, 255, 0.3),
-      0 0 12px rgba(255, 215, 0, 0.5);
-  }
-  50% {
-    box-shadow: 
-      0 6px 16px rgba(0, 0, 0, 0.4),
-      inset -2px -2px 5px rgba(0, 0, 0, 0.5),
-      inset 3px 3px 5px rgba(255, 255, 255, 0.3),
-      0 0 20px rgba(255, 215, 0, 0.8);
-  }
-}
-
-.rope-container:hover .rope-anchor {
-  animation: anchorGlow 1.5s ease-in-out infinite;
-}
-
